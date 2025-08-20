@@ -39,6 +39,49 @@
             overflow-x: hidden;
         }
 
+        /* شاشة التحميل */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
         /* الخلفية المتحركة */
         .background-animation {
             position: fixed;
@@ -872,6 +915,12 @@
     </style>
 </head>
 <body>
+    <!-- شاشة التحميل -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">جاري التحميل...</div>
+    </div>
+
     <!-- الخلفية المتحركة -->
     <div class="background-animation"></div>
     <div class="particles" id="particles"></div>
@@ -1189,7 +1238,8 @@
                 whatsappTitle: "واتساب",
                 locationTitle: "الموقع",
                 locationText: "صلاح الدين - العراق",
-                footerText: "&copy; 2025 حسام الدين. جميع الحقوق محفوظة."
+                footerText: "&copy; 2025 حسام الدين. جميع الحقوق محفوظة.",
+                loadingText: "جاري التحميل..."
             },
             en: {
                 siteLogo: "Hussam Aldeen",
@@ -1243,7 +1293,8 @@
                 whatsappTitle: "WhatsApp",
                 locationTitle: "Location",
                 locationText: "Salah Al-Din - Iraq",
-                footerText: "&copy; 2025 Hussam Aldeen. All rights reserved."
+                footerText: "&copy; 2025 Hussam Aldeen. All rights reserved.",
+                loadingText: "Loading..."
             }
         };
 
@@ -1453,15 +1504,42 @@
             document.getElementById('locationText').textContent = t.locationText;
             
             document.getElementById('footerText').innerHTML = t.footerText;
+            
+            // تحديث نص شاشة التحميل
+            if (document.querySelector('.loading-text')) {
+                document.querySelector('.loading-text').textContent = t.loadingText;
+            }
+        }
+
+        // التعامل مع شاشة التحميل
+        function handleLoadingScreen() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            
+            // إخفاء شاشة التحميل بعد اكتمال تحميل الصفحة
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(function() {
+                        loadingScreen.style.visibility = 'hidden';
+                    }, 500);
+                }, 1500); // تأخير 1.5 ثانية قبل إخفاء شاشة التحميل
+            });
         }
 
         // تشغيل الوظائف عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', function() {
+            handleLoadingScreen();
             createParticles();
             smoothScroll();
-            animateOnScroll();
             setupMobileMenu();
             setupLanguageToggle();
+            
+            // تحسين موقع أيقونة الفيديو وتحريكها
+            const videoIcon = document.querySelector('.about-image .floating-icon:nth-child(4)');
+            if (videoIcon) {
+                videoIcon.style.bottom = '20px';
+                videoIcon.style.right = '40px';
+            }
             
             // تفعيل الأنيميشن عند التمرير
             window.addEventListener('scroll', function() {
@@ -1482,6 +1560,9 @@
                     statsAnimated = true;
                 }
             });
+            
+            // تشغيل الأنيميشن بعد تحميل الصفحة
+            setTimeout(animateOnScroll, 100);
         });
     </script>
 </body>
