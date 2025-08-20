@@ -402,13 +402,9 @@
         }
 
         .profile-image {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            margin: 0 auto 2rem;
-            animation: profileFloat 3s ease-in-out infinite;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         @keyframes profileFloat {
@@ -1110,12 +1106,76 @@
     <!-- القسم الرئيسي -->
     <section id="home" class="hero" style="padding-top: 90px;">
         <div class="hero-content">
-            <img src="https://www2.0zz0.com/2025/08/20/11/683475935.jpg" alt="حسام الدين" class="profile-image">
+            <div class="profile-image-container">
+                <div class="profile-image-flipper">
+                    <div class="profile-image-front">
+                        <img src="https://www2.0zz0.com/2025/08/20/11/683475935.jpg" alt="حسام الدين" class="profile-image">
+                    </div>
+                    <div class="profile-image-back">
+                        <img src="https://www2.0zz0.com/2025/08/20/13/525910745.jpg" alt="حسام الدين" class="profile-image">
+                    </div>
+                </div>
+            </div>
             <h1 id="heroTitle">حسام الدين</h1>
             <p class="subtitle" id="heroSubtitle1">محتوى تقني | ماجستير هندسة | خبير الذكاء الاصطناعي</p>
             <p class="subtitle" id="heroSubtitle2">متخصص في انستقرام واسرار الايفون</p>
             <a href="#contact" class="cta-button" id="ctaButton">تواصل معي</a>
         </div>
+
+        <style>
+            .profile-image-container {
+                perspective: 1000px;
+                width: 200px;
+                height: 200px;
+                margin: 0 auto 2rem;
+                animation: floatUpDown 3s ease-in-out infinite;
+            }
+
+            @keyframes floatUpDown {
+                0%, 100% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-15px);
+                }
+            }
+
+            .profile-image-flipper {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                transition: transform 0.8s;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+
+            .profile-image-container:hover .profile-image-flipper,
+            .profile-image-container:active .profile-image-flipper {
+                transform: rotateY(180deg);
+            }
+
+            .profile-image-front,
+            .profile-image-back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 5px solid rgba(255, 255, 255, 0.3);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            }
+
+            .profile-image-back {
+                transform: rotateY(180deg);
+            }
+
+            .profile-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        </style>
     </section>
 
     <!-- قسم نبذة -->
@@ -1134,8 +1194,8 @@
                     <div class="floating-icon">
                         <i class="fab fa-apple"></i>
                     </div>
-                    <div class="floating-icon">
-                        <i class="fas fa-video"></i>
+                    <div class="">
+                        <i class=""></i>
                     </div>
                 </div>
                 <div class="about-text fade-in">
