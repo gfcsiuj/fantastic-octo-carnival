@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حسام الدين - خبير المحتوى التقني والذكاء الاصطناعي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --text-color: #333;
+            --light-color: #fff;
+            --bg-light: #f8f9fa;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        [lang="en"] {
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        [lang="ar"] {
+            --font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family, 'Cairo', sans-serif);
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* الخلفية المتحركة */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* الجسيمات المتحركة */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* الهيدر */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* زر تبديل اللغة */
+        .language-toggle {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 15px;
+            font-family: var(--font-family, 'Cairo', sans-serif);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 20px;
+        }
+
+        .language-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* زر القائمة للموبايل */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* القسم الرئيسي */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            margin: 0 auto 2rem;
+            animation: profileFloat 3s ease-in-out infinite;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes profileFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* الأقسام */
+        .section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--text-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        /* قسم حول */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        /* قسم صورة مع الأيقونات */
+        .about-image {
+            text-align: center;
+            position: relative;
+            height: 300px;
+        }
+
+        .about-main-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .floating-icon {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .floating-icon:nth-child(1) {
+            top: 30px;
+            left: 0;
+            animation: floatIcon 3s ease-in-out infinite;
+            animation-delay: 0.2s;
+        }
+
+        .floating-icon:nth-child(2) {
+            top: 80px;
+            right: 0;
+            animation: floatIcon 4s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+
+        .floating-icon:nth-child(3) {
+            bottom: 40px;
+            left: 20px;
+            animation: floatIcon 3.5s ease-in-out infinite;
+            animation-delay: 0.5s;
+        }
+
+        .floating-icon:nth-child(4) {
+            bottom: 80px;
+            right: 30px;
+            animation: floatIcon 2.5s ease-in-out infinite;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .stat-item.animate {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+        }
+
+        /* قسم الخدمات */
+        .services {
+            background: var(--bg-light);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        /* قسم اللقاءات الإعلامية */
+        .media-section {
+            background: #f0f2f5;
+        }
+
+        .media-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .media-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .media-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .media-thumb {
+            position: relative;
+        }
+
+        .media-thumb img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: rgba(102, 126, 234, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .media-item:hover .play-icon {
+            background: rgba(118, 75, 162, 0.9);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .media-info {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .media-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .media-info p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .media-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .media-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* قسم الهوايات */
+        .hobbies {
+            background-color: var(--bg-light);
+        }
+
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .hobby-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hobby-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .hobby-card:hover::before {
+            left: 100%;
+        }
+
+        .hobby-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .hobby-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .hobby-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        /* قسم التواصل */
+        .contact {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .contact-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding: 0.5rem 0;
+        }
+
+        .contact-card a:hover {
+            transform: scale(1.05);
+            text-decoration: underline;
+        }
+
+        /* تحسين أيقونات وسائل التواصل */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .social-link:hover::before {
+            animation: shine 1.5s forwards;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .social-link i {
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover i {
+            transform: scale(1.2);
+        }
+
+        /* الفوتر */
+        .footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* الأنيميشن */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* موبايل */
+        @media (max-width: 992px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .services-grid,
+            .hobbies-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background: rgba(255, 255, 255, 0.98);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .about-image {
+                height: 280px;
+            }
+
+            .about-main-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            .floating-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .social-link {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .about-main-image {
+                width: 180px;
+                height: 180px;
+            }
+
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .section {
+                padding: 70px 0;
+            }
+
+            .service-card,
+            .hobby-card {
+                padding: 2rem 1rem;
+            }
+
+            .floating-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+
+            .contact-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* English styles */
+        [lang="en"] .nav-links,
+        [lang="en"] .contact-content {
+            direction: ltr;
+        }
+
+        [lang="en"] .section-title::after {
+            right: 50%;
+            left: auto;
+            transform: translateX(50%);
+        }
+    </style>
+</head>
+<body>
+    <!-- الخلفية المتحركة -->
+    <div class="background-animation"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- الهيدر -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo" id="siteLogo">حسام الدين</div>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-home">الرئيسية</a></li>
+                <li><a href="#about" class="nav-about">نبذة</a></li>
+                <li><a href="#services" class="nav-services">خدماتي</a></li>
+                <li><a href="#media" class="nav-media">لقاءاتي</a></li>
+                <li><a href="#hobbies" class="nav-hobbies">هواياتي</a></li>
+                <li><a href="#contact" class="nav-contact">تواصل</a></li>
+                <li>
+                    <button class="language-toggle" id="languageToggle">
+                        <i class="fas fa-globe"></i>
+                        EN
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- القسم الرئيسي -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <img src="https://www2.0zz0.com/2025/08/20/11/683475935.jpg" alt="حسام الدين" class="profile-image">
+            <h1 id="heroTitle">حسام الدين</h1>
+            <p class="subtitle" id="heroSubtitle1">محتوى تقني | ماجستير هندسة | خبير الذكاء الاصطناعي</p>
+            <p class="subtitle" id="heroSubtitle2">متخصص في انستقرام واسرار الايفون</p>
+            <a href="#contact" class="cta-button" id="ctaButton">تواصل معي</a>
+        </div>
+    </section>
+
+    <!-- قسم نبذة -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in" id="aboutTitle">نبذة عني</h2>
+            <div class="about-content">
+                <div class="about-image fade-in">
+                    <img src="https://www2.0zz0.com/2025/08/20/11/683475935.jpg" alt="حسام الدين" class="about-main-image">
+                    <div class="floating-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="floating-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="floating-icon">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <div class="floating-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                </div>
+                <div class="about-text fade-in">
+                    <h3 id="aboutHeading">مرحباً، أنا حسام الدين</h3>
+                    <p id="aboutText1">خبير في المحتوى التقني وحاصل على ماجستير في الهندسة، متخصص في مجال الذكاء الاصطناعي وإنشاء المحتوى الرقمي. أقدم محتوى تقني عالي الجودة يركز على أحدث التطورات في عالم التكنولوجيا، خاصة في مجال الذكاء الاصطناعي وأسرار منصة انستقرام وخفايا أجهزة الايفون.</p>
+                    
+                    <p id="aboutText2">من خلال خبرتي الواسعة، أساعد الأشخاص والشركات على فهم التكنولوجيا الحديثة وتطبيقها بطريقة عملية ومفيدة. كما ظهرت في عدة لقاءات إعلامية مهمة، منها لقائي على قناة الشرقية.</p>
+                    
+                    <p id="aboutText3">أؤمن بأن التكنولوجيا يجب أن تكون في متناول الجميع، ولذلك أحرص على تقديم المحتوى بطريقة مبسطة وواضحة تناسب جميع المستويات.</p>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">5+</span>
+                    <span id="statYears">سنوات خبرة</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">250K+</span>
+                    <span id="statInstagram">متابع على انسغرام</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">2.5K+</span>
+                    <span id="statYoutube">متابع على يوتيوب</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">21.9K+</span>
+                    <span id="statTiktok">متابع على تيك توك</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الخدمات -->
+    <section id="services" class="section services">
+        <div class="container">
+            <h2 class="section-title fade-in" id="servicesTitle">خدماتي</h2>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 id="service1Title">استشارات الذكاء الاصطناعي</h3>
+                    <p id="service1Text">تقديم استشارات متخصصة في تطبيقات الذكاء الاصطناعي وكيفية الاستفادة منها في الأعمال والحياة اليومية</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h3 id="service2Title">استراتيجيات انستقرام</h3>
+                    <p id="service2Text">تطوير استراتيجيات فعالة لنمو الحسابات على انستقرام وزيادة التفاعل والوصول</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <h3 id="service3Title">خبير أجهزة آبل</h3>
+                    <p id="service3Text">تقديم النصائح والحلول التقنية لمستخدمي أجهزة آبل واستكشاف الميزات المخفية</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 id="service4Title">إنتاج المحتوى</h3>
+                    <p id="service4Text">إنتاج محتوى تقني عالي الجودة للمنصات المختلفة بأسلوب مبسط وجذاب</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 id="service5Title">التدريب التقني</h3>
+                    <p id="service5Text">ورش تدريبية متخصصة في التكنولوجيا الحديثة والذكاء الاصطناعي</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3 id="service6Title">إدارة الإعلانات</h3>
+                    <p id="service6Text">إدارة الحملات الإعلانية الرقمية وتحسين الأداء لتحقيق أفضل النتائج</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم اللقاءات الإعلامية -->
+    <section id="media" class="section media-section">
+        <div class="container">
+            <h2 class="section-title fade-in" id="mediaTitle">لقاءاتي الإعلامية</h2>
+            <div class="media-container">
+                <div class="media-item fade-in">
+                    <a href="https://www.youtube.com/watch?v=pR3wn3JNZL8&t=1005s" target="_blank">
+                        <div class="media-thumb">
+                            <img src="https://www2.0zz0.com/2025/08/20/12/848461267.jpg" alt="لقاء تلفزيوني">
+                            <div class="play-icon">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="media-info">
+                            <h3 id="mediaItemTitle">لقاء قناة الشرقية</h3>
+                            <p id="mediaItemText">مناقشة أحدث التطورات التقنية والذكاء الاصطناعي وتأثيرها على المستقبل</p>
+                            <a href="https://www.youtube.com/watch?v=pR3wn3JNZL8&t=1005s" target="_blank" class="media-link" id="mediaItemLink">مشاهدة اللقاء</a>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الهوايات -->
+    <section id="hobbies" class="section hobbies">
+        <div class="container">
+            <h2 class="section-title fade-in" id="hobbiesTitle">هواياتي</h2>
+            <div class="hobbies-grid">
+                <div class="hobby-card fade-in">
+                    <div class="hobby-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h3 id="hobby1Title">رفع الأثقال</h3>
+                    <p id="hobby1Text">أمارس رياضة رفع الأثقال بانتظام للحفاظ على اللياقة البدنية وتحسين الصحة العامة، مما يساعدني على التركيز في العمل</p>
+                </div>
+                
+                <div class="hobby-card fade-in">
+                    <div class="hobby-icon">
+                        <i class="fas fa-plane-departure"></i>
+                    </div>
+                    <h3 id="hobby2Title">السفر</h3>
+                    <p id="hobby2Text">أحب استكشاف ثقافات وحضارات مختلفة حول العالم، مما يوسع آفاقي ويلهمني بأفكار جديدة للمحتوى الذي أقدمه</p>
+                </div>
+                
+                <div class="hobby-card fade-in">
+                    <div class="hobby-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3 id="hobby3Title">مشاهدة الأنمي</h3>
+                    <p id="hobby3Text">أستمتع بمشاهدة الأنمي الياباني لما يحتويه من قصص ملهمة وفن مميز، ويعتبر من وسائل الترفيه المفضلة لي في أوقات الفراغ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم التواصل -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="section-title" style="color: white;" id="contactTitle">تواصل معي</h2>
+            <div class="contact-info fade-in">
+                <h3 id="contactSubtitle">يمكنك التواصل معي من خلال</h3>
+                
+                <div class="contact-cards">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h4 id="emailTitle">البريد الإلكتروني</h4>
+                        <a href="mailto:zenghussam@gmail.com" id="emailLink">zenghussam@gmail.com</a>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h4 id="whatsappTitle">واتساب</h4>
+                        <a href="https://wa.me/9647778122586" target="_blank" id="whatsappLink">+964 777 812 2586</a>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4 id="locationTitle">الموقع</h4>
+                        <p id="locationText">صلاح الدين - العراق</p>
+                    </div>
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://www.instagram.com/hussam.dn" target="_blank" class="social-link" aria-label="انستقرام">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@hussam.dn" target="_blank" class="social-link" aria-label="تيك توك">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@hussamaldeen2" target="_blank" class="social-link" aria-label="يوتيوب">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://t.me/hussamdn" target="_blank" class="social-link" aria-label="تلغرام">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer class="footer">
+        <div class="container">
+            <p id="footerText">&copy; 2025 حسام الدين. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+        // تحديد عناصر الترجمة
+        const translations = {
+            ar: {
+                siteLogo: "حسام الدين",
+                navHome: "الرئيسية",
+                navAbout: "نبذة",
+                navServices: "خدماتي",
+                navMedia: "لقاءاتي",
+                navHobbies: "هواياتي",
+                navContact: "تواصل",
+                languageToggle: "EN",
+                heroTitle: "حسام الدين",
+                heroSubtitle1: "محتوى تقني | ماجستير هندسة | خبير الذكاء الاصطناعي",
+                heroSubtitle2: "متخصص في انستقرام واسرار الايفون",
+                ctaButton: "تواصل معي",
+                aboutTitle: "نبذة عني",
+                aboutHeading: "مرحباً، أنا حسام الدين",
+                aboutText1: "خبير في المحتوى التقني وحاصل على ماجستير في الهندسة، متخصص في مجال الذكاء الاصطناعي وإنشاء المحتوى الرقمي. أقدم محتوى تقني عالي الجودة يركز على أحدث التطورات في عالم التكنولوجيا، خاصة في مجال الذكاء الاصطناعي وأسرار منصة انستقرام وخفايا أجهزة الايفون.",
+                aboutText2: "من خلال خبرتي الواسعة، أساعد الأشخاص والشركات على فهم التكنولوجيا الحديثة وتطبيقها بطريقة عملية ومفيدة. كما ظهرت في عدة لقاءات إعلامية مهمة، منها لقائي على قناة الشرقية.",
+                aboutText3: "أؤمن بأن التكنولوجيا يجب أن تكون في متناول الجميع، ولذلك أحرص على تقديم المحتوى بطريقة مبسطة وواضحة تناسب جميع المستويات.",
+                statYears: "سنوات خبرة",
+                statInstagram: "متابع على انسغرام",
+                statYoutube: "متابع على يوتيوب",
+                statTiktok: "متابع على تيك توك",
+                servicesTitle: "خدماتي",
+                service1Title: "استشارات الذكاء الاصطناعي",
+                service1Text: "تقديم استشارات متخصصة في تطبيقات الذكاء الاصطناعي وكيفية الاستفادة منها في الأعمال والحياة اليومية",
+                service2Title: "استراتيجيات انستقرام",
+                service2Text: "تطوير استراتيجيات فعالة لنمو الحسابات على انستقرام وزيادة التفاعل والوصول",
+                service3Title: "خبير أجهزة آبل",
+                service3Text: "تقديم النصائح والحلول التقنية لمستخدمي أجهزة آبل واستكشاف الميزات المخفية",
+                service4Title: "إنتاج المحتوى",
+                service4Text: "إنتاج محتوى تقني عالي الجودة للمنصات المختلفة بأسلوب مبسط وجذاب",
+                service5Title: "التدريب التقني",
+                service5Text: "ورش تدريبية متخصصة في التكنولوجيا الحديثة والذكاء الاصطناعي",
+                service6Title: "إدارة الإعلانات",
+                service6Text: "إدارة الحملات الإعلانية الرقمية وتحسين الأداء لتحقيق أفضل النتائج",
+                mediaTitle: "لقاءاتي الإعلامية",
+                mediaItemTitle: "لقاء قناة الشرقية",
+                mediaItemText: "مناقشة أحدث التطورات التقنية والذكاء الاصطناعي وتأثيرها على المستقبل",
+                mediaItemLink: "مشاهدة اللقاء",
+                hobbiesTitle: "هواياتي",
+                hobby1Title: "رفع الأثقال",
+                hobby1Text: "أمارس رياضة رفع الأثقال بانتظام للحفاظ على اللياقة البدنية وتحسين الصحة العامة، مما يساعدني على التركيز في العمل",
+                hobby2Title: "السفر",
+                hobby2Text: "أحب استكشاف ثقافات وحضارات مختلفة حول العالم، مما يوسع آفاقي ويلهمني بأفكار جديدة للمحتوى الذي أقدمه",
+                hobby3Title: "مشاهدة الأنمي",
+                hobby3Text: "أستمتع بمشاهدة الأنمي الياباني لما يحتويه من قصص ملهمة وفن مميز، ويعتبر من وسائل الترفيه المفضلة لي في أوقات الفراغ",
+                contactTitle: "تواصل معي",
+                contactSubtitle: "يمكنك التواصل معي من خلال",
+                emailTitle: "البريد الإلكتروني",
+                whatsappTitle: "واتساب",
+                locationTitle: "الموقع",
+                locationText: "صلاح الدين - العراق",
+                footerText: "&copy; 2025 حسام الدين. جميع الحقوق محفوظة."
+            },
+            en: {
+                siteLogo: "Hussam Aldeen",
+                navHome: "Home",
+                navAbout: "About",
+                navServices: "Services",
+                navMedia: "Media",
+                navHobbies: "Hobbies",
+                navContact: "Contact",
+                languageToggle: "AR",
+                heroTitle: "Hussam Aldeen",
+                heroSubtitle1: "Tech Content | Master's in Engineering | AI Expert",
+                heroSubtitle2: "Specialized in Instagram and iPhone Secrets",
+                ctaButton: "Contact Me",
+                aboutTitle: "About Me",
+                aboutHeading: "Hello, I'm Hussam Aldeen",
+                aboutText1: "An expert in technical content with a Master's degree in Engineering, specializing in artificial intelligence and digital content creation. I deliver high-quality technical content focusing on the latest developments in technology, especially in the field of AI, Instagram platform secrets, and iPhone tips.",
+                aboutText2: "Through my extensive experience, I help individuals and companies understand modern technology and apply it in practical and useful ways. I have also appeared in several important media interviews, including my appearance on Al-Sharqiya Channel.",
+                aboutText3: "I believe that technology should be accessible to everyone, so I make sure to present content in a simplified and clear way that suits all levels.",
+                statYears: "Years of Experience",
+                statInstagram: "Instagram Followers",
+                statYoutube: "YouTube Subscribers",
+                statTiktok: "TikTok Followers",
+                servicesTitle: "My Services",
+                service1Title: "AI Consulting",
+                service1Text: "Providing specialized consultations in AI applications and how to leverage them in business and everyday life",
+                service2Title: "Instagram Strategies",
+                service2Text: "Developing effective strategies for growing accounts on Instagram and increasing engagement and reach",
+                service3Title: "Apple Device Expert",
+                service3Text: "Providing tips and technical solutions for Apple device users and exploring hidden features",
+                service4Title: "Content Production",
+                service4Text: "Producing high-quality technical content for various platforms in a simplified and attractive style",
+                service5Title: "Technical Training",
+                service5Text: "Specialized workshops in modern technology and artificial intelligence",
+                service6Title: "Ad Management",
+                service6Text: "Managing digital advertising campaigns and optimizing performance to achieve the best results",
+                mediaTitle: "Media Appearances",
+                mediaItemTitle: "Al-Sharqiya Channel Interview",
+                mediaItemText: "Discussing the latest technological developments and artificial intelligence and their impact on the future",
+                mediaItemLink: "Watch Interview",
+                hobbiesTitle: "My Hobbies",
+                hobby1Title: "Weightlifting",
+                hobby1Text: "I regularly practice weightlifting to maintain physical fitness and improve overall health, which helps me focus on work",
+                hobby2Title: "Travel",
+                hobby2Text: "I love exploring different cultures and civilizations around the world, which broadens my horizons and inspires me with new ideas for the content I create",
+                hobby3Title: "Watching Anime",
+                hobby3Text: "I enjoy watching Japanese anime for its inspiring stories and distinctive art, and it's one of my favorite forms of entertainment in my free time",
+                contactTitle: "Contact Me",
+                contactSubtitle: "You can reach me through",
+                emailTitle: "Email",
+                whatsappTitle: "WhatsApp",
+                locationTitle: "Location",
+                locationText: "Salah Al-Din - Iraq",
+                footerText: "&copy; 2025 Hussam Aldeen. All rights reserved."
+            }
+        };
+
+        // إنشاء الجسيمات المتحركة
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // تفعيل الأنيميشن عند التمرير
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.fade-in, .stat-item');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('animate');
+                }
+            });
+        }
+
+        // تغيير شفافية الهيدر عند التمرير
+        function updateHeader() {
+            const header = document.querySelector('.header');
+            const scrolled = window.pageYOffset;
+            
+            if (scrolled > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            }
+        }
+
+        // التمرير السلس للروابط
+        function smoothScroll() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').includes('#')) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href').substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            const offsetTop = targetElement.offsetTop - 80;
+                            
+                            window.scrollTo({
+                                top: offsetTop,
+                                behavior: 'smooth'
+                            });
+                            
+                            // إغلاق القائمة في الموبايل بعد النقر على رابط
+                            if (window.innerWidth <= 768) {
+                                document.getElementById('navLinks').classList.remove('active');
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+        // تفعيل العد المتحرك للإحصائيات
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const originalText = counter.innerText;
+                const target = parseFloat(originalText);
+                
+                if (isNaN(target)) return;
+
+                const suffix = originalText.replace(String(target), '').trim();
+                const hasDecimal = originalText.includes('.');
+                
+                let current = 0;
+                const increment = target / 100;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.innerText = originalText;
+                        clearInterval(timer);
+                    } else {
+                        if (hasDecimal) {
+                            counter.innerText = current.toFixed(1) + suffix;
+                        } else {
+                            counter.innerText = Math.ceil(current) + suffix;
+                        }
+                    }
+                }, 20);
+            });
+        }
+
+        // تفعيل قائمة الموبايل
+        function setupMobileMenu() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+            
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+            
+            // إغلاق القائمة عند النقر خارجها
+            document.addEventListener('click', function(e) {
+                if (!menuToggle.contains(e.target) && !navLinks.contains(e.target) && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        }
+
+        // تفعيل زر تبديل اللغة وتغيير المحتوى
+        function setupLanguageToggle() {
+            const languageToggle = document.getElementById('languageToggle');
+            
+            languageToggle.addEventListener('click', function() {
+                const currentLang = document.documentElement.lang;
+                const newLang = currentLang === 'ar' ? 'en' : 'ar';
+                
+                // تغيير اتجاه الصفحة واللغة
+                document.documentElement.lang = newLang;
+                document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
+                
+                // تحديث نص زر اللغة
+                this.innerHTML = `<i class="fas fa-globe"></i> ${translations[newLang].languageToggle}`;
+                
+                // تحديث جميع النصوص
+                updateTranslations(newLang);
+            });
+        }
+
+        // تحديث النصوص حسب اللغة المختارة
+        function updateTranslations(lang) {
+            const t = translations[lang];
+            
+            // تحديث العناصر
+            document.getElementById('siteLogo').textContent = t.siteLogo;
+            document.querySelector('.nav-home').textContent = t.navHome;
+            document.querySelector('.nav-about').textContent = t.navAbout;
+            document.querySelector('.nav-services').textContent = t.navServices;
+            document.querySelector('.nav-media').textContent = t.navMedia;
+            document.querySelector('.nav-hobbies').textContent = t.navHobbies;
+            document.querySelector('.nav-contact').textContent = t.navContact;
+            
+            document.getElementById('heroTitle').textContent = t.heroTitle;
+            document.getElementById('heroSubtitle1').textContent = t.heroSubtitle1;
+            document.getElementById('heroSubtitle2').textContent = t.heroSubtitle2;
+            document.getElementById('ctaButton').textContent = t.ctaButton;
+            
+            document.getElementById('aboutTitle').textContent = t.aboutTitle;
+            document.getElementById('aboutHeading').textContent = t.aboutHeading;
+            document.getElementById('aboutText1').textContent = t.aboutText1;
+            document.getElementById('aboutText2').textContent = t.aboutText2;
+            document.getElementById('aboutText3').textContent = t.aboutText3;
+            
+            document.getElementById('statYears').textContent = t.statYears;
+            document.getElementById('statInstagram').textContent = t.statInstagram;
+            document.getElementById('statYoutube').textContent = t.statYoutube;
+            document.getElementById('statTiktok').textContent = t.statTiktok;
+            
+            document.getElementById('servicesTitle').textContent = t.servicesTitle;
+            document.getElementById('service1Title').textContent = t.service1Title;
+            document.getElementById('service1Text').textContent = t.service1Text;
+            document.getElementById('service2Title').textContent = t.service2Title;
+            document.getElementById('service2Text').textContent = t.service2Text;
+            document.getElementById('service3Title').textContent = t.service3Title;
+            document.getElementById('service3Text').textContent = t.service3Text;
+            document.getElementById('service4Title').textContent = t.service4Title;
+            document.getElementById('service4Text').textContent = t.service4Text;
+            document.getElementById('service5Title').textContent = t.service5Title;
+            document.getElementById('service5Text').textContent = t.service5Text;
+            document.getElementById('service6Title').textContent = t.service6Title;
+            document.getElementById('service6Text').textContent = t.service6Text;
+            
+            document.getElementById('mediaTitle').textContent = t.mediaTitle;
+            document.getElementById('mediaItemTitle').textContent = t.mediaItemTitle;
+            document.getElementById('mediaItemText').textContent = t.mediaItemText;
+            document.getElementById('mediaItemLink').textContent = t.mediaItemLink;
+            
+            document.getElementById('hobbiesTitle').textContent = t.hobbiesTitle;
+            document.getElementById('hobby1Title').textContent = t.hobby1Title;
+            document.getElementById('hobby1Text').textContent = t.hobby1Text;
+            document.getElementById('hobby2Title').textContent = t.hobby2Title;
+            document.getElementById('hobby2Text').textContent = t.hobby2Text;
+            document.getElementById('hobby3Title').textContent = t.hobby3Title;
+            document.getElementById('hobby3Text').textContent = t.hobby3Text;
+            
+            document.getElementById('contactTitle').textContent = t.contactTitle;
+            document.getElementById('contactSubtitle').textContent = t.contactSubtitle;
+            document.getElementById('emailTitle').textContent = t.emailTitle;
+            document.getElementById('whatsappTitle').textContent = t.whatsappTitle;
+            document.getElementById('locationTitle').textContent = t.locationTitle;
+            document.getElementById('locationText').textContent = t.locationText;
+            
+            document.getElementById('footerText').innerHTML = t.footerText;
+        }
+
+        // تشغيل الوظائف عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            smoothScroll();
+            animateOnScroll();
+            setupMobileMenu();
+            setupLanguageToggle();
+            
+            // تفعيل الأنيميشن عند التمرير
+            window.addEventListener('scroll', function() {
+                animateOnScroll();
+                updateHeader();
+            });
+            
+            // تفعيل العد عند الوصول لقسم الإحصائيات
+            let statsAnimated = false;
+            window.addEventListener('scroll', function() {
+                const statsSection = document.querySelector('.stats');
+                if (!statsSection) return;
+                
+                const statsTop = statsSection.getBoundingClientRect().top;
+                
+                if (statsTop < window.innerHeight && !statsAnimated) {
+                    setTimeout(animateCounters, 500);
+                    statsAnimated = true;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
