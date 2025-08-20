@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حسام الدين - خبير المحتوى التقني والذكاء الاصطناعي</title>
+    <link rel="icon" type="image/jpeg" href="https://www2.0zz0.com/2025/08/20/11/683475935.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,39 +38,172 @@
             line-height: 1.6;
             color: var(--text-color);
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* شاشة التحميل */
+        /* شاشة التحميل المحسنة */
         .loading-screen {
             position: fixed;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            height: 100vh; /* زيادة ارتفاع شاشة التحميل */
+            background: linear-gradient(180deg, rgb(26,26,46), rgb(16,24,40)); /* إزالة الشفافية */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+            color: #fff;
+            transition: opacity 600ms ease, visibility 600ms ease;
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
         }
 
+        /* مخطط الدائرة واللوغو داخل شاشة التحميل */
         .loading-spinner {
-            width: 80px;
-            height: 80px;
-            border: 8px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            width: 140px;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .loading-spinner::before,
+        .loading-spinner::after {
+            content: '';
+            position: absolute;
             border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-            margin-bottom: 20px;
+            border: 4px solid transparent;
+        }
+
+        /* الحلقة الخارجية */
+        .loading-spinner::before {
+            width: 140px;
+            height: 140px;
+            border-top-color: rgba(102, 126, 234, 0.95);
+            border-right-color: rgba(118, 75, 162, 0.8);
+            animation: spin 1.6s cubic-bezier(.68,-0.55,.27,1.55) infinite;
+            box-shadow: 0 8px 30px rgba(102,126,234,0.15);
+        }
+
+        /* الحلقة الداخلية */
+        .loading-spinner::after {
+            width: 94px;
+            height: 94px;
+            border-top-color: rgba(255,255,255,0.95);
+            border-left-color: rgba(255,255,255,0.12);
+            animation: spin 1.1s linear reverse infinite;
+            filter: blur(0.2px);
+        }
+
+        /* شعار الحرف المركزي */
+        .loading-spinner .loader-logo {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 2rem;
+            color: #fff;
+            background: linear-gradient(135deg, rgba(102,126,234,1), rgba(118,75,162,1));
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 0 40px rgba(102,126,234,0.18);
+            transform: translateZ(0);
         }
 
         .loading-text {
-            color: white;
-            font-size: 18px;
+            color: rgba(255,255,255,0.95);
+            font-size: 1.05rem;
             font-weight: 600;
-            animation: pulse 1.5s ease-in-out infinite;
+            letter-spacing: 1px;
+            margin-top: 6px;
+            text-transform: none;
+            opacity: 0.98;
+        }
+
+        /* الحالة عند الإخفاء: يستخدم الـ JS لتغيير opacity/visibility */
+        .loading-screen.hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+
+        /* تقليل الحركة للمستخدمين الذين اختاروا ذلك */
+        @media (prefers-reduced-motion: reduce) {
+            .loading-spinner::before,
+            .loading-spinner::after {
+                animation: none;
+            }
+            .loader-logo {
+                animation: none;
+            }
+        }
+
+        /* تأكد من عدم ظهور تمرير الصفحة أثناء التحميل */
+        html.loading, body.loading {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .loader-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+
+        .loader-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+        }
+
+        .loader-ring:nth-child(2) {
+            border-color: transparent;
+            border-top-color: var(--secondary-color);
+            animation-delay: -0.5s;
+            animation-direction: reverse;
+        }
+
+        .loader-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 800;
+            animation: logo-pulse 2s ease-in-out infinite;
+            z-index: 10;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+        }
+
+
+        .loading-text {
+            color: rgb(255, 255, 255);
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: text-flicker 3s linear infinite;
         }
 
         @keyframes spin {
@@ -77,9 +211,31 @@
             100% { transform: rotate(360deg); }
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        @keyframes logo-pulse {
+            0%, 100% {
+            transform: translate(-50%, -50%) scale(1);
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+            }
+            50% {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 0 50px rgba(118, 75, 162, 0.7);
+            }
+        }
+
+        @keyframes text-flicker {
+            0% { opacity: 0.5; }
+            5% { opacity: 1; }
+            15% { opacity: 0.6; }
+            20% { opacity: 1; }
+            30% { opacity: 0.5; }
+            35% { opacity: 1; }
+            45% { opacity: 0.7; }
+            50% { opacity: 1; }
+            60% { opacity: 0.5; }
+            70% { opacity: 1; }
+            80% { opacity: 0.6; }
+            90% { opacity: 1; }
+            100% { opacity: 0.5; }
         }
 
         /* الخلفية المتحركة */
